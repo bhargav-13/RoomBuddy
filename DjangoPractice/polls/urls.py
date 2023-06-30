@@ -14,4 +14,6 @@ urlpatterns = [
     path('deleteroom/<str:pk>', views.DeleteRoom, name="delete-room"),
     path('delete-msg/<str:pk>', views.DeleteMsg, name="delete-msg"),
 
+    path('profile/<str:pk>', views.userProfile, name="user-profile"),
+
 ]

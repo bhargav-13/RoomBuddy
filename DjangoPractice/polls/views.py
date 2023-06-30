@@ -24,7 +24,9 @@ def home(request):
 
     topic = Topic.objects.all()
     room_count = rooms.count()
-    context = { 'rooms' : rooms, 'topics' : topic, 'room_count' : room_count }
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
+
+    context = { 'rooms' : rooms, 'topics' : topic, 'room_count' : room_count, 'room_messages' : room_messages }
     return render(request, 'polls/home.html', context)
 
 def room(request, pk):
@@ -40,10 +42,20 @@ def room(request, pk):
         room.participants.add(request.user)
         return redirect('room', pk = room.id)
 
-
-
     context = {'room': room, 'room_messages' : messages, 'participants':  participants}
     return render(request, 'polls/room.html', context)
+
+def userProfile(request, pk):
+    user = User.objects.get(id = pk)
+    rooms = user.room_set.all()
+    room_messages = user.message_set.all()
+    topics = Topic.objects.all()
+    return render(request, 'polls/profile.html', {
+        "user" : user,
+        "rooms" : rooms,
+        "room_messages" : room_messages,
+        "topics" : topics,
+    })
 
 @login_required(login_url= '/login')
 def Createroom(request):
@@ -51,7 +63,9 @@ def Createroom(request):
     if request.method == 'POST':
         form = RoomForm(request.POST)
         if form.is_valid():
-            form.save()
+            room = form.save(commit=False)
+            room.host = request.user
+            room.save()
             return redirect('home')
 
     context = {'form' : form}
@@ -131,6 +145,7 @@ def RegisterPage(request):
             messages.error(request, "An Error During Registration")
 
     return render(request, 'polls/login_register.html', {'form' : form})
+
 
 @login_required(login_url= '/login')
 def DeleteMsg(request, pk):

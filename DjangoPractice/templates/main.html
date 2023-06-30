@@ -1,18 +1,24 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>RoomBudd</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'polls/style/main.css' %}">
 </head>
 <body>
   {% include 'navbar.html' %}
 
   {% if messages %}
-    <ul>
+  <div class="cnt">
+      <ul>
         {% for message in messages%}
-        <li> {{message}}</li>
+        <li style="color:red"> {{message}}</li>
         {% endfor %}
     </ul>
+  </div>
+
   {% endif %}
 
   {% block content %}

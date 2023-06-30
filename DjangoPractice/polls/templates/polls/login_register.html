@@ -3,21 +3,31 @@
 {% block content %}
 
 {% if page == 'login' %}
-    <div>
+    <div class="login-form">
+        <div class="login-cntr">
+            <h1>LOGIN</h1>
+        </div>
+
        <form method="post" action="">
-            {% csrf_token %}
+           {% csrf_token %}
+           <div class="login-cntr">
+                <h2>Find Your Partner</h2>
+           </div>
 
-            <label>Username:</label>
-            <input type="text" name="username" placeholder="Enter Username">
+            <div class="login-content">
+                <label>Username:</label>
+                <input class="abc" type="text" name="username" placeholder="Enter Username">
 
-            <label>Password:</label>
-            <input type="password" name="password" placeholder="Enter Password">
-
-            <input type="submit" value="Login">
+                <label>Password:</label>
+                <input class="abc" type="password" name="password" placeholder="Enter Password">
+                <input class="btn-delete" type="submit" value="Login">
+            </div>
         </form>
 
-        <p>Haven't Signed up Yet?</p>
-        <a href="{% url 'register' %}">Sign Up</a>
+        <div class="login-cntr">
+            <p>Haven't Signed up Yet?</p>
+            <a href="{% url 'register' %}">Sign Up</a>
+        </div>
     </div>
 
 {% else %}

@@ -1,17 +1,24 @@
+{% load static %}
 
-  <a href="/">
-    <h1>Home</h1>
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'polls/style/main.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<div class="main-con">
+    <a href="/">
+    <a href="{% url 'home' %}"><img src="{% static 'polls/images/logo.png' %}" alt="studdybud"></a
   </a>
 
   <form action="{% url 'home' %}">
+    <i class="fa fa-search" aria-hidden="true"></i>
     <input type="text"  name="q" placeholder="Search Rooms..."/>
   </form>
 
 
   {% if request.user.is_authenticated %}
-  <p>Hello, {{request.user}}</p>
-  <a href="{% url 'logout' %}" >Logout</a>
+  <a class="login" href="{% url 'logout' %}" >Logout</a>
   {% else %}
-  <a href="{% url 'login' %}" >Login</a>
+  <a class="login" href="{% url 'login' %}" >Login</a>
   {% endif %}
-<hr>
+</div>
+

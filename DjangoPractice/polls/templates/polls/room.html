@@ -11,43 +11,59 @@
 
     <div class="room-container">
 
-        <div>
-            <h1>{{room.name}}</h1>
-            <h2>{{room.description}}</h2>
+        <div class="room-main">
+            <div class="room-header">
+                <a href="{{request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                <span style="color:#e1f6fb">STUDY ROOM</span>
+            </div>
+
+            <div class="room-content">
+                <h1>{{room.name}}</h1>
+                <p>{{room.description}}</p>
+                <h3>{{room.topic}}</h3>
+            </div>
+
+            <hr>
 
             <div class="comment-wrapper">
-                <h3>Conversation</h3>
-                <hr>
-
+                <h3>Conversation:</h3>
+                <div class="msg-content">
                 {% for message in room_messages %}
-                    <div>
-                        {% if request.user == message.user %}
-                        <a href="{% url 'delete-msg' message.id %}">Delete</a>
-                        {% endif %}
-                        <small>@{{message.user}} {{message.created|timesince}} ago</small>
-                        <p>{{message.body}}</p>
-                        <hr>
+                    <div class="msg-head">
+                        <div>
+                            <small>@{{message.user}} {{message.created|timesince}} ago</small>
+                        </div>
+                        <div>
+                            {% if request.user == message.user %}
+                                <a href="{% url 'delete-msg' message.id %}">Delete</a>
+                            {% endif %}
+                        </div>
                     </div>
-                {% endfor %}
+                        <p>{{message.body}}</p>
+                    {% endfor %}
+                </div>
             </div>
+
             {% if request.user.is_authenticated %}
             <div class="comment-form">
                 <form method="post" action="">
                     {% csrf_token %}
-                    <input type="text" name="body" placeholder="Write your message here....">
-
+                    <input type="text" name="body" placeholder="   Write your message here....">
                 </form>
             </div>
             {% endif %}
         </div>
 
-        <div>
-            <h3>Participants</h3>
-            <hr>
+        <div class="participants-con">
+            <div class="participants-head">
+                <h3>Participants</h3>
+            </div>
 
             {% for user in participants %}
                 <div>
-                    <p>@{{user.username}}</p>
+                    <p>@<a href="url 'user.username.'"></a>{{user.username}}</p>
+            {% empty %}
+                    <p>--No Participants--</p>
                 </div>
             {%endfor%}
         </div>
