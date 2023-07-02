@@ -19,16 +19,20 @@
                         <h3>Edit your profile</h3>
                     </div>
                 </div>
-                <div class="layout__body">
+                <div class="login-form">
                     <form class="form" action="" method="post">
                         {% csrf_token %}
-
+                        <div class="login-content">
                         {% for field in form %}
                         <div class="form__group">
                             <label>{{field.label}}</label>
-                            {{field}}
+                            <div class="abc">
+                                {{field}}
+                            </div>
+
                         </div>
                         {% endfor %}
+                        </div>
                         <div class="room-head" style="display: inline-block;">
                            <a href="{ url 'home' }">Cancel</a>
                         </div>

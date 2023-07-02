@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {%block content%}
 
@@ -17,7 +18,7 @@
 
         <div  class="feed-container">
             <div class="profile-main">
-                <a href="{% url 'update-user' %}"><img src="logo.png" alt="image"></a>
+                <a href="{% url 'update-user' %}"><img src="{% static 'polls/images/profile.png' %}" alt="image"></a>
                 <h2>{{user.username}}</h2>
                 <a class="name" href="">@{{user.username}}</a>
                 {% if request.user == user %}
