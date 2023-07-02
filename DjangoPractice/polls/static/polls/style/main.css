@@ -22,6 +22,7 @@
     box-sizing: border-box;
     text-rendering: optimizeLegibility;
     font-size: inherit;
+    color: var(--color-light-gray);
   }
 
 
@@ -30,11 +31,13 @@
     background-color: var(--color-bg);
   }
 
-  a {
+ a{
     display: inline-block;
     color: var(--color-main);
-    text-decoration: none;
-  }
+    text-decoration: none!important;
+ }
+
+
 
 .main-con{
     display: flex;
@@ -50,6 +53,7 @@
     height: 50px;
     margin-right: 25px;
     margin-left: 40px;
+   background-color: var(--color-main);
 }
 
 .main-con .login{
@@ -132,7 +136,9 @@ svg {
 }
 
 .topics-container .topics-name a{
-  margin-top: 20px;
+  margin-top: 15px;
+  margin:10px;
+  margin-left: 15px;
   color: var(--color-main-light);
 }
 
@@ -167,8 +173,12 @@ svg {
 }
 
 hr{
-  margin-top: 25px;
+  margin-top: 15px;
   margin-bottom: 15px;
+}
+
+.feed-container{
+    margin-top: 0px;
 }
 
 .room-content{
@@ -183,13 +193,13 @@ hr{
     font-size: 15px;
 }
 
-.room-content h3 a{
+.room-content h2 a{
     margin-top: 10px;
     color: var(--color-main-light);
     font-size: 18px;
 }
 
-.room-content h3 a:hover{
+.room-content h2 a:hover{
     margin-top: 10px;
     color: var(--color-main);
     font-size: 18px;
@@ -201,8 +211,8 @@ hr{
   align-items: center;
 }
 
-.room-content hr{
-  opacity: 0.3;
+.topics-container hr{
+  opacity: 1;
 }
 
 .feed-foot a{
@@ -256,9 +266,9 @@ hr{
 
 .login-form{
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
-  width: 30%;
+  width: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--color-dark);
   border-radius: 8px;
@@ -299,20 +309,15 @@ hr{
   margin: 10px;
 }
 
-.login-content .abc{
+
+
+.login-content .abc input{
   padding: 8px;
-  padding-right: 170px;
+  padding-right: 30%;
   background-color: var(--color-dark);
   border: 1px solid var(--color-dark-light);
   border-radius: 8px;
 }
-
-  .room-container{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-radius: 8px;
-  }
 
   .room-main{
     background-color: var(--color-dark);
@@ -345,10 +350,6 @@ hr{
   color: var(--color-light);
 }
 
-.room-content h2{
-  color: var(color-light-gray);
-}
-
 .room-content h3{
   display: inline-block;
   background-color: var(--color-dark-light);
@@ -373,6 +374,7 @@ hr{
   display: inline-block;
   background-color: var(--color-main-light);
   padding: 5px;
+
   border-bottom-right-radius: 5px;
 }
 
@@ -427,4 +429,44 @@ hr{
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
   height: 30px;
+}
+
+.profile-main{
+  text-align: center;
+  margin: 20px;
+}
+
+.profile-main img{
+    height: 100px;
+    width: 100px;
+    border: 1px solid var(--color-main);
+    border-radius: 500px;
+}
+
+.profile-abt{
+  margin: 10px;
+  & h1{
+    margin-bottom: 20px;
+    color: var(--color-dark);
+  }
+}
+
+.profile-main .name{
+  display: block;
+}
+
+.edit-profile{
+  margin: 20px;
+  border: 1px solid var(--color-main);
+  padding: 10px;
+  border-radius: 50px;
+}
+
+.edit-profile:hover{
+  margin: 20px;
+  border: 1px solid var(--color-main);
+  padding: 10px;
+  border-radius: 50px;
+  background-color: var(--color-main);
+  color: var(--color-main-light);
 }

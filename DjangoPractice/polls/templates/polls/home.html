@@ -6,6 +6,7 @@
     .home-container{
         display:grid;
         grid-template-columns:1fr 3fr 1fr;
+
     }
 </style>
 
@@ -19,7 +20,7 @@
             <div class="room-head">
                  <div>
                 <h1>ROOM</h1>
-                <h5>{{room_count}} rooms available</h5>
+                <h5 style="color: grey">{{room_count}} rooms available</h5>
                 </div>
                 <div>
                 <a href="{% url 'create-room' %}">Create Room</a>

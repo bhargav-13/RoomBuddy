@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Room, Topic, Message
-from .forms import RoomForm
+from .forms import RoomForm,UserForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
@@ -28,6 +28,54 @@ def home(request):
 
     context = { 'rooms' : rooms, 'topics' : topic, 'room_count' : room_count, 'room_messages' : room_messages }
     return render(request, 'polls/home.html', context)
+
+
+def loginPage(request):
+    page = 'login'
+
+    if request.method == 'POST':
+        username = request.POST.get('username').lower
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(username= username)
+        except:
+            messages.error(request, "User Doesn't Exist")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Username or Password is invalid')
+
+    context = {'page' : page}
+    return render(request, 'polls/login_register.html', context)
+
+def logoutUser(request):
+
+    logout(request)
+
+    return redirect('home')
+
+def RegisterPage(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.email = user.email.lower()
+            user.is_active = True
+            user.save()
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, "An Error During Registration")
+
+    return render(request, 'polls/login_register.html', {'form' : form})
+
 
 def room(request, pk):
     room = Room.objects.get(id=pk)
@@ -60,6 +108,7 @@ def userProfile(request, pk):
 @login_required(login_url= '/login')
 def Createroom(request):
     form = RoomForm()
+    topics = Topic.objects.all()
     if request.method == 'POST':
         form = RoomForm(request.POST)
         if form.is_valid():
@@ -68,14 +117,14 @@ def Createroom(request):
             room.save()
             return redirect('home')
 
-    context = {'form' : form}
+    context = {'form' : form, 'topics':topics}
     return render(request, 'polls/room_forn.html', context)
 
 @login_required(login_url= '/login')
 def updateRoom(request, pk):
     room = Room.objects.get(id=pk)
     form = RoomForm(instance=room)
-
+    topics = Topic.objects.all()
     if request.user != room.host:
         return HttpResponse("<h1>You are not Allowed Here!!</h1>")
 
@@ -85,7 +134,7 @@ def updateRoom(request, pk):
             form.save()
             return redirect('home')
 
-    context = {'form' : form}
+    context = {'form' : form, 'topics':topics}
     return render(request, 'polls/room_forn.html', context)
 
 @login_required(login_url= '/login')
@@ -101,52 +150,6 @@ def DeleteRoom(request, pk):
 
     return render(request, 'polls/delete.html', {'obj' : room})
 
-def LoginPage(request):
-    page = 'login'
-
-    if request.method == 'POST':
-        username = request.POST.get('username').lower
-        password = request.POST.get('password')
-
-        try:
-            user = User.objects.get(username= username)
-        except:
-            messages.error(request, "User Doesn't Exist")
-
-        user = authenticate(request, username=username, password= password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('home')
-        else:
-            messages.error(request, 'Username or Password is invalid')
-
-    context = {'page' : page}
-    return render(request, 'polls/login_register.html', context)
-
-def logoutUser(request):
-
-    logout(request)
-
-    return redirect('home')
-
-def RegisterPage(request):
-    form = UserCreationForm()
-
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-            login(request, user)
-            return redirect('home')
-        else:
-            messages.error(request, "An Error During Registration")
-
-    return render(request, 'polls/login_register.html', {'form' : form})
-
-
 @login_required(login_url= '/login')
 def DeleteMsg(request, pk):
     message = Message.objects.get(id = pk)
@@ -160,3 +163,15 @@ def DeleteMsg(request, pk):
 
     return render(request, 'polls/delete.html', {'obj' : message})
 
+@login_required(login_url='login')
+def updateUser(request):
+    user  = request.user
+    form = UserForm(instance=user)
+
+    if request.method == "POST":
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile', pk=user.id)
+
+    return render(request,'polls/update-user.html', {'form': form})

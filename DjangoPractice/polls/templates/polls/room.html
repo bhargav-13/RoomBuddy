@@ -13,14 +13,14 @@
 
         <div class="room-main">
             <div class="room-header">
-                <a href="{{request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                <a href="{% url 'home' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                 <span style="color:#e1f6fb">STUDY ROOM</span>
             </div>
 
             <div class="room-content">
                 <h1>{{room.name}}</h1>
                 <p>{{room.description}}</p>
-                <h3>{{room.topic}}</h3>
+                <span>{{room.topic}}</span>
             </div>
 
             <hr>
@@ -61,7 +61,7 @@
 
             {% for user in participants %}
                 <div>
-                    <p>@<a href="url 'user.username.'"></a>{{user.username}}</p>
+                    <p><a href="{% url 'user-profile' user.id %}">@{{user.username}}</a></p>
             {% empty %}
                     <p>--No Participants--</p>
                 </div>

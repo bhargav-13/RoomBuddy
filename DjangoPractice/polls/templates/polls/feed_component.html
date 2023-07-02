@@ -1,10 +1,23 @@
 
   {% for room in rooms%}
+  <style>
+    .room-content h2 a{
+        margin-top: 10px;
+        color: var(--color-main-light);
+        font-size: 18px;
+    }
+
+    .room-content h2 a:hover{
+        margin-top: 10px;
+        color: var(--color-main);
+        font-size: 18px;
+    }
+  </style>
   <hr>
        <div class="room-content">
 
          <a href="{% url 'user-profile' room.host.id %}"> @{{room.host.username}}</a>
-         <h3><a href="{% url 'room' room.id %}">{{room.name}}</a></h3>
+         <h2><a href="{% url 'room' room.id %}">{{room.name}}</a></h2>
          <p>{{room.description}}</p>
          <hr>
          <div class="feed-foot">

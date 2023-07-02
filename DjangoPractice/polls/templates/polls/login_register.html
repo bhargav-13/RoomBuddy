@@ -2,6 +2,7 @@
 
 {% block content %}
 
+
 {% if page == 'login' %}
     <div class="login-form">
         <div class="login-cntr">
@@ -15,13 +16,16 @@
            </div>
 
             <div class="login-content">
-                <label>Username:</label>
-                <input class="abc" type="text" name="username" placeholder="Enter Username">
+                <div class="abc">
+                    <label>Username:</label>
+                    <input type="text" name="username" placeholder="Enter Username">
 
-                <label>Password:</label>
-                <input class="abc" type="password" name="password" placeholder="Enter Password">
+                    <label>Password:</label>
+                    <input type="password" name="password" placeholder="Enter Password">
+                </div>
                 <input class="btn-delete" type="submit" value="Login">
             </div>
+
         </form>
 
         <div class="login-cntr">
@@ -32,17 +36,30 @@
 
 {% else %}
 
-    <div>
+    <div class="login-form">
+        <div class="login-cntr">
+            <h1>REGISTER</h1>
+        </div>
        <form method="post" action="">
             {% csrf_token %}
+            <div class="login-content">
+            {% for field in form %}
+                 <label>{{field.label}}</label>
+               <div class="abc">
+                   {{field}}
+               </div>
+            {% endfor %}
+                <button type="submit" class="btn-delete" value="Register">Register</button>
+            </div>
 
-            {{form.as_p}}
 
-            <input type="submit" value="Register">
         </form>
-        <p>Already Signed up Yet?</p>
+        <div class="login-cntr"
+        <p>Already Signed up?</p>
         <a href="{% url 'login' %}">Login</a>
-    </div>
+        </div>
 {% endif %}
+    </div>
+
 
 {% endblock %}

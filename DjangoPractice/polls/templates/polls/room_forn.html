@@ -1,12 +1,40 @@
 {% extends 'main.html' %}
 
 {% block content %}
+<style>
+    .fields *{
+      padding:5px;
+      padding-right: 170px;
+      background-color: var(--color-dark);
+      border: 1px solid var(--color-dark-light);
+      border-radius: 8px;
+    }
+    option{
+        color:grey;
+    }
+</style>
 
 <div>
     <form method="post" action="" >
         {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Submit"  />
+        <div class="login-form">
+            <div class="login-cntr">
+            <h1>Create room</h1>
+            </div>
+
+            <div  class="login-content">
+                {% for field in form %}
+                    <label>{{field.label}}</label>
+                <div class="fields">
+                    {{field}}
+                </div>
+                {% endfor %}
+            </div>
+
+
+            <input type="submit" class="btn-delete" value="Submit"  />
+        </div>
+
     </form>
 </div>
 

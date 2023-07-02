@@ -4,22 +4,37 @@
 
 <style>
     .profile-container{
-    display: grid;
-    grid-template-columns: 1fr 3fr 2fr;
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        margin: 25px;
     }
 </style>
-    <h1>{{ user.username }}</h1>
 
     <div class="profile-container">
-        <div>
+        <div id="topics-profile">
             {% include 'polls/topics_component.html'  %}
         </div>
 
-        <div>
+        <div  class="feed-container">
+            <div class="profile-main">
+                <a href="{% url 'update-user' %}"><img src="logo.png" alt="image"></a>
+                <h2>{{user.username}}</h2>
+                <a class="name" href="">@{{user.username}}</a>
+                {% if request.user == user %}
+                <a class="edit-profile" href="{% url 'update-user' %}">Edit Profile</a>
+                {% endif %}
+            </div>
+            <div class="profile-abt">
+                <h1>ABOUT</h1>
+                <P>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi nesciunt repellat dignissimos at
+                    voluptatem maxime.</P>
+            </div>
+            <div>
+            </div>
             {% include 'polls/feed_component.html'  %}
         </div>
 
-        <div>
+        <div  class="activity-container">
             {% include 'polls/activity_component.html'  %}
         </div>
     </div>
